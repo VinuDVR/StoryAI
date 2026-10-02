@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { seed } from "@/db/seed";
+import { ensureSeeded } from "@/db/seed";
 
 export const dynamic = "force-dynamic";
 
 export async function POST() {
   try {
-    await seed();
+    await ensureSeeded();
     return NextResponse.json({ ok: true, message: "Seed complete" });
   } catch (err) {
     console.error(err);

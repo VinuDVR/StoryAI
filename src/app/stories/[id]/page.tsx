@@ -30,13 +30,13 @@ export default async function StoryDetailPage({
   const [story] = await db.select().from(stories).where(eq(stories.id, storyId));
   if (!story) notFound();
 
-  const characters = (story.characters as Array<{
+  const characters = story.meta.characters as Array<{
     id: string;
     name: string;
     role: string;
-    description: string;
-    stats?: string[];
-  }>) || [];
+    blurb: string;
+    rel?: string[];
+  }>;
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
@@ -109,10 +109,10 @@ export default async function StoryDetailPage({
                           {char.role}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-400 font-sans">{char.description}</p>
-                      {char.stats && char.stats.length > 0 && (
+                      <p className="text-sm text-slate-400 font-sans">{char.blurb}</p>
+                      {char.rel && char.rel.length > 0 && (
                         <div className="flex gap-2 mt-2">
-                          {char.stats.map((s) => (
+                          {char.rel.map((s) => (
                             <span key={s} className="text-xs font-sans text-slate-500 bg-white/5 px-2 py-0.5 rounded">
                               {s}
                             </span>
@@ -145,13 +145,13 @@ export default async function StoryDetailPage({
                 <span className="text-slate-400 flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5" /> Chapters
                 </span>
-                <span className="text-white font-medium">{story.totalChapters}</span>
+                <span className="text-white font-medium">{story.chapterCount}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-slate-400 flex items-center gap-1.5">
                   <Star className="w-3.5 h-3.5" /> Endings
                 </span>
-                <span className="text-white font-medium">{story.totalEndings}</span>
+                <span className="text-white font-medium">{story.endingCount}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-slate-400 flex items-center gap-1.5">

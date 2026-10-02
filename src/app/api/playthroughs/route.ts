@@ -1,72 +1,27 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
-import { playthroughs, storyNodes } from "@/db/schema";
-import { and, eq } from "drizzle-orm";
-import { createInitialState } from "@/lib/game-engine";
-import { cookies } from "next/headers";
+import { eq } from "drizzle-orm";
+import { stories } from "@/db/schema";
+import { ensurePlayerId, getPlayerId, listPlaythroughs, startPlaythrough } from "@/lib/game";
 
 export const dynamic = "force-dynamic";
 
-function getSessionId(cookieStore: Awaited<ReturnType<typeof cookies>>): string {
-  let sid = cookieStore.get("sw_session")?.value;
-  if (!sid) {
-    sid = crypto.randomUUID();
-  }
-  return sid;
-}
-
 export async function POST(req: Request) {
-  const body = await req.json();
-  const storyId: number = body.storyId;
+  const body = (await req.json().catch(() => ({}))) as { storyId?: unknown };
+  const storyId = Number(body.storyId);
 
-  if (!storyId) {
+  if (!Number.isInteger(storyId) || storyId < 1) {
     return NextResponse.json({ error: "storyId required" }, { status: 400 });
   }
 
-  const cookieStore = await cookies();
-  const sessionId = getSessionId(cookieStore);
-
-  // Find start node
-  const [startNode] = await db
-    .select()
-    .from(storyNodes)
-    .where(and(eq(storyNodes.storyId, storyId), eq(storyNodes.isStart, true)));
-
-  if (!startNode) {
-    return NextResponse.json({ error: "Story has no start node" }, { status: 404 });
-  }
-
-  const initialState = createInitialState(storyId);
-
-  const [pt] = await db
-    .insert(playthroughs)
-    .values({
-      sessionId,
-      storyId,
-      currentNodeKey: startNode.nodeKey,
-      state: initialState,
-      gemsBalance: 50,
-    })
-    .returning();
-
-  const response = NextResponse.json({ playthrough: pt, node: startNode });
-  response.cookies.set("sw_session", sessionId, {
-    httpOnly: true,
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 30,
-  });
-  return response;
+  const [story] = await db.select({ slug: stories.slug }).from(stories).where(eq(stories.id, storyId));
+  if (!story) return NextResponse.json({ error: "Story not found" }, { status: 404 });
+  const playerId = await ensurePlayerId();
+  const id = await startPlaythrough(playerId, story.slug);
+  if (!id) return NextResponse.json({ error: "Story has no start node" }, { status: 404 });
+  return NextResponse.json({ id, playthrough: { id } });
 }
 
 export async function GET() {
-  const cookieStore = await cookies();
-  const sessionId = getSessionId(cookieStore);
-
-  const pts = await db
-    .select()
-    .from(playthroughs)
-    .where(eq(playthroughs.sessionId, sessionId))
-    .orderBy(playthroughs.updatedAt);
-
-  return NextResponse.json(pts);
+  return NextResponse.json(await listPlaythroughs(await getPlayerId()));
 }

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125">
+  <defs>
+    <linearGradient id="space" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#071a32"/><stop offset=".56" stop-color="#123c5c"/><stop offset="1" stop-color="#351d55"/>
+    </linearGradient>
+    <linearGradient id="planet" x1=".15" y1="0" x2=".8" y2="1">
+      <stop stop-color="#5dd6cf"/><stop offset=".48" stop-color="#287d9a"/><stop offset="1" stop-color="#142d53"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#c7fff4" stop-opacity=".9"/><stop offset="1" stop-color="#56a9c0" stop-opacity=".22"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1125" fill="url(#space)"/>
+  <circle cx="705" cy="230" r="205" fill="#d7b2ed" opacity=".14"/>
+  <circle cx="705" cy="230" r="156" fill="url(#planet)"/>
+  <path d="M560 217c78-55 202-62 290-13M578 289c76-31 166-33 253-5M617 143c45-28 108-38 166-28" fill="none" stroke="#a4fff0" stroke-opacity=".28" stroke-width="13"/>
+  <g fill="#e5fbff">
+    <circle cx="111" cy="117" r="3"/><circle cx="243" cy="208" r="2"/><circle cx="409" cy="101" r="3"/><circle cx="511" cy="305" r="2"/><circle cx="145" cy="360" r="2"/><circle cx="793" cy="497" r="3"/><circle cx="353" cy="459" r="2"/><circle cx="690" cy="569" r="2"/><circle cx="118" cy="647" r="3"/><circle cx="492" cy="679" r="2"/><circle cx="788" cy="775" r="2"/>
+  </g>
+  <path d="M0 832c170-86 291-101 450-42s284 60 450-23v358H0Z" fill="#081528" opacity=".76"/>
+  <g transform="translate(70 450)">
+    <path d="M125 127h445l-40 55H164Z" fill="#91d9df" opacity=".25" stroke="#d5fff7" stroke-width="6"/>
+    <path d="M197 103h285l55 24H141Z" fill="url(#glass)" stroke="#d5fff7" stroke-width="5"/>
+    <path d="M205 182h285l-28 31H235Z" fill="#5395b1" opacity=".7" stroke="#b6f8ef" stroke-width="4"/>
+    <path d="M340 105V42m-45 0h90m-65-15h40" stroke="#d5fff7" stroke-width="7" stroke-linecap="round"/>
+    <path d="M141 126 55 93v90l109-1m380-56 84-36v90l-112-1" fill="#41a4bf" opacity=".75" stroke="#d5fff7" stroke-width="5"/>
+    <path d="M75 109h60m-60 18h60m405-18h67m-67 18h67" stroke="#b6f8ef" stroke-width="4" opacity=".8"/>
+    <path d="M285 211v76m100-76v76m-130 0h160" stroke="#9bd8df" stroke-width="6"/>
+  </g>
+  <path d="M0 915h900" stroke="#74d9d2" stroke-opacity=".5" stroke-width="2"/>
+  <text x="58" y="985" fill="#d7fff4" font-family="Georgia,serif" font-size="34" letter-spacing="5">SIGNAL LOST</text>
+  <text x="58" y="1040" fill="#d7fff4" font-family="Georgia,serif" font-size="34" letter-spacing="5">KEPLER STATION</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#18202b"/><stop offset="1" stop-color="#9b542a"/></linearGradient></defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <path d="M0 520 300 270 610 500 850 180 1200 430V700H0Z" fill="#11151d" opacity=".88"/>
+  <circle cx="820" cy="205" r="100" fill="#f2c36d" opacity=".8"/>
+  <path d="M280 510 430 245 600 510Z" fill="#c96f36"/><path d="M390 510 450 350 520 510Z" fill="#f4d08b"/>
+  <rect x="690" y="330" width="250" height="170" rx="8" fill="#d7a64f"/><rect x="720" y="360" width="190" height="110" fill="#202735"/>
+  <text x="60" y="105" fill="#f7d58c" font-family="Georgia,serif" font-size="54" letter-spacing="8">THE HEIST</text>
+</svg>

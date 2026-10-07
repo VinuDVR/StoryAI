@@ -60,7 +60,7 @@ export default function Reader({ initial }: { initial: GameView }) {
         setRewardNotice(rewards.map((reward) => `+${reward.amount} 💎 ${reward.description}`).join(" · "));
       }
       setPending(null);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => document.getElementById("current-scene")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
       router.refresh();
     } catch {
       setError({ message: "Network problem. Please try again." });
@@ -134,8 +134,22 @@ export default function Reader({ initial }: { initial: GameView }) {
           <div className="h-full rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-all duration-700" style={{ width: `${ending ? 100 : progress}%` }} />
         </div>
 
+        {view.earlier.length > 0 && (
+          <div className="mb-10 space-y-8 opacity-70">
+            {view.earlier.map((s) => (
+              <div key={s.key}>
+                <h2 className="font-story text-2xl font-semibold text-zinc-200">{s.title}</h2>
+                <div className="mt-4 space-y-4">
+                  <SceneBlocks blocks={s.blocks} />
+                </div>
+                <p className="mt-5 border-l-2 border-violet-400/50 pl-4 text-sm italic text-violet-200/80">You chose: {s.choice}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* scene */}
-        <article key={view.node.key} className="fade-up">
+        <article id="current-scene" key={view.node.key} className="fade-up scroll-mt-20">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-400">
             {ending ? `Ending ${String(ending.number).padStart(2, "0")}` : `Chapter ${view.chapter}`}
           </p>
@@ -438,6 +452,41 @@ export default function Reader({ initial }: { initial: GameView }) {
         </div>
       )}
     </div>
+  );
+}
+
+function SceneBlocks({ blocks }: { blocks: GameView["node"]["blocks"] }) {
+  return (
+    <>
+      {blocks.map((b, i) => {
+        if (b.type === "dialogue")
+          return (
+            <div key={i} className="border-l-2 pl-4" style={{ borderColor: b.color ?? "#a78bfa" }}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: b.color ?? "#c4b5fd" }}>
+                {b.speaker}
+              </p>
+              <p className="font-story mt-1 text-lg leading-8 text-zinc-100">“{b.text}”</p>
+            </div>
+          );
+        if (b.type === "thought")
+          return (
+            <p key={i} className="font-story border-l border-white/20 pl-4 text-lg italic leading-8 text-amber-100/80">
+              {b.text}
+            </p>
+          );
+        if (b.type === "system")
+          return (
+            <p key={i} className="rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.25em] text-zinc-100">
+              {b.text}
+            </p>
+          );
+        return (
+          <p key={i} className="font-story text-lg leading-8 text-zinc-300">
+            {b.text}
+          </p>
+        );
+      })}
+    </>
   );
 }
 

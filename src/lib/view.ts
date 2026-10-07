@@ -45,6 +45,7 @@ export interface GameView {
   chapter: number;
   totalChapters: number;
   node: { key: string; title: string; blocks: RenderBlock[] };
+  earlier: { key: string; title: string; blocks: RenderBlock[]; choice: string }[];
   choices: ChoiceView[];
   notice: { echo: string | null; shifted: string[] };
   bonds: BondView[];

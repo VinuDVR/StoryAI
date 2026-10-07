@@ -224,6 +224,29 @@ async function buildView(pt: PlaythroughRow, story: StoryRow, graph: Graph, gems
     };
   }
 
+  const trail: { chapter: number; scene: GameView["earlier"][number] }[] = [];
+  let replay: GameState = initialState(meta);
+  for (const s of steps) {
+    const from = graph.get(s.fromNodeKey);
+    if (!from) {
+      trail.length = 0;
+      break;
+    }
+    trail.push({
+      chapter: from.chapterNumber,
+      scene: {
+        key: from.nodeKey,
+        title: from.sceneTitle,
+        blocks: renderBlocks(from.content, replay, meta.characters),
+        choice: s.choiceText,
+      },
+    });
+    const used = from.choices.find((c) => c.choiceKey === s.choiceKey);
+    replay = applyEffects(replay, used?.effects);
+  }
+  const earlier: GameView["earlier"] = [];
+  for (let i = trail.length - 1; i >= 0 && trail[i].chapter === node.chapterNumber; i--) earlier.unshift(trail[i].scene);
+
   const shifted = (state.shifted ?? [])
     .map((id) => meta.characters.find((c) => c.id === id)?.name)
     .filter((n): n is string => !!n);
@@ -240,6 +263,7 @@ async function buildView(pt: PlaythroughRow, story: StoryRow, graph: Graph, gems
     chapter: node.chapterNumber,
     totalChapters: story.chapterCount,
     node: { key: node.nodeKey, title: node.sceneTitle, blocks: renderBlocks(node.content, state, meta.characters) },
+    earlier,
     choices,
     notice: { echo: state.echo ?? null, shifted },
     bonds: buildBonds(meta, state),

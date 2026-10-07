@@ -1,7 +1,7 @@
 import { when } from "./dsl";
 import type { StoryDef } from "./types";
 
-export const hollowmere: StoryDef = {
+export const hollowmereLegacy: StoryDef = {
   slug: "hollow-at-hollowmere",
   title: "The Hollow at Hollowmere",
   tagline: "You were hired to catalogue a library. The house was hiring for something else.",

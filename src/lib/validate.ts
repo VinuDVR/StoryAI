@@ -176,7 +176,7 @@ export function validateStory(def: StoryDef, runs = 4000): StoryReport {
       if (!all[e.key]) warnings.push(`Ending "${e.title}" never reached in ${runs} simulated runs`);
       else if (!free[e.key]) warnings.push(`Ending "${e.title}" needs premium choices in simulation`);
     }
-    if (!Object.keys(free).length) errors.push("No ending reachable without spending gems");
+    if (runs > 0 && !Object.keys(free).length) errors.push("No ending reachable without spending gems");
   }
 
   const chapters = new Set(nodes.filter((n) => !n.routes?.length).map((n) => n.ch));

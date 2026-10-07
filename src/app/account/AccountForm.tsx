@@ -32,7 +32,9 @@ export default function AccountForm() {
       setError(result.error ?? "Could not sign you in. Try again.");
       return;
     }
-    router.replace(result.dailyReward ? "/account?dailyReward=1" : "/account");
+    const next = new URLSearchParams(window.location.search).get("next");
+    const safeNext = next && next.startsWith("/") && !next.startsWith("//") && !next.startsWith("/\\") ? next : null;
+    router.replace(safeNext ?? (result.dailyReward ? "/account?dailyReward=1" : "/account"));
     router.refresh();
   }
 

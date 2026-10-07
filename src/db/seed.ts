@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { nodeChoices, stories, storyNodes } from "@/db/schema";
 import { normalize } from "@/stories/dsl";
+import { validateStory } from "@/lib/validate";
 import { STORIES } from "@/stories";
 import type { StoryDef, StoryMeta } from "@/stories/types";
 
@@ -19,6 +20,11 @@ async function seed() {
     const hash = hashOf(def);
     if (current.get(def.slug) === hash) continue;
 
+    const report = validateStory(def, 0);
+    if (report.errors.length) {
+      console.error(`Story "${def.slug}" failed validation and was not published:`, report.errors);
+      continue;
+    }
     const nodes = normalize(def);
     const premium = nodes.some((n) => n.choices.some((c) => c.gems));
     const chapters = Math.max(...nodes.filter((n) => !n.routes?.length).map((n) => n.ch));

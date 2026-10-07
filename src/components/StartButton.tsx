@@ -25,6 +25,11 @@ export default function StartButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug }),
       });
+      if (res.status === 401) {
+        router.push(`/account?next=${encodeURIComponent(window.location.pathname)}`);
+        setBusy(false);
+        return;
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Could not start");
       router.push(`/play/${data.id}`);

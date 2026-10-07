@@ -16,6 +16,11 @@ export default function StartStoryButton({ storyId }: { storyId: number }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ storyId }),
       });
+      if (res.status === 401) {
+        router.push(`/account?next=${encodeURIComponent(window.location.pathname)}`);
+        setLoading(false);
+        return;
+      }
       if (!res.ok) throw new Error("Failed to start");
       const data = await res.json();
       router.push(`/play/${data.playthrough.id}`);

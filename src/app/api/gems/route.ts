@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => ({}))) as { action?: string; pack?: string };
   const playerId = await ensurePlayerId();
+  if (!playerId) return NextResponse.json({ error: "Sign in required." }, { status: 401 });
   if (body.action === "daily") {
     const res = await claimDaily(playerId);
     return NextResponse.json(res, { status: res.ok ? 200 : 429 });

@@ -8,7 +8,11 @@ import { generateCoverImage } from "@/lib/cover-generator";
 
 export const dynamic = "force-dynamic";
 
-export async function POST() {
+export async function POST(req: Request) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken || req.headers.get("x-admin-token") !== adminToken) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
   try {
     const allStories = await db.select().from(stories);
     const failed: string[] = [];
@@ -49,6 +53,6 @@ export async function POST() {
     );
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+    return NextResponse.json({ error: "Cover generation failed." }, { status: 500 });
   }
 }

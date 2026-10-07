@@ -17,6 +17,7 @@ export async function POST(req: Request) {
   const [story] = await db.select({ slug: stories.slug }).from(stories).where(eq(stories.id, storyId));
   if (!story) return NextResponse.json({ error: "Story not found" }, { status: 404 });
   const playerId = await ensurePlayerId();
+  if (!playerId) return NextResponse.json({ error: "Sign in to start a story." }, { status: 401 });
   const id = await startPlaythrough(playerId, story.slug);
   if (!id) return NextResponse.json({ error: "Story has no start node" }, { status: 404 });
   return NextResponse.json({ id, playthrough: { id } });

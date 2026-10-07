@@ -7,11 +7,13 @@ import { getGems, getPlayerId } from "@/lib/game";
 
 export default async function Header() {
   let gems = 0;
-  let accountLabel = "Account";
+  let signedIn = false;
+  let accountLabel = "Sign in";
   try {
     const playerId = await getPlayerId();
     gems = await getGems(playerId);
     if (playerId) {
+      signedIn = true;
       const [player] = await db
         .select({ displayName: players.displayName, email: players.email })
         .from(players)
@@ -38,16 +40,20 @@ export default async function Header() {
             <UserRound className="h-4 w-4 shrink-0" />
             <span className="truncate">{accountLabel}</span>
           </Link>
-          <Link href="/studio" className="hidden rounded-full px-3 py-1.5 text-zinc-300 hover:bg-white/5 hover:text-white sm:block">
-            Studio
-          </Link>
-          <Link
-            href="/gems"
-            className="ml-2 flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1.5 font-medium text-amber-200 hover:bg-amber-400/20"
-          >
-            <span>💎</span>
-            <span>{gems}</span>
-          </Link>
+          {process.env.NODE_ENV !== "production" && (
+            <Link href="/studio" className="hidden rounded-full px-3 py-1.5 text-zinc-300 hover:bg-white/5 hover:text-white sm:block">
+              Studio
+            </Link>
+          )}
+          {signedIn && (
+            <Link
+              href="/gems"
+              className="ml-2 flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1.5 font-medium text-amber-200 hover:bg-amber-400/20"
+            >
+              <span>💎</span>
+              <span>{gems}</span>
+            </Link>
+          )}
         </nav>
       </div>
     </header>

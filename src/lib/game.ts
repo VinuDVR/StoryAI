@@ -1,5 +1,4 @@
 import { and, asc, desc, eq, inArray, sql } from "drizzle-orm";
-import { cookies } from "next/headers";
 import { getAuthenticatedPlayerId } from "@/lib/auth";
 import { db } from "@/db";
 import { ensureSeeded } from "@/db/seed";
@@ -17,7 +16,6 @@ import type { BondView, GameView } from "./view";
 import type { GameState, StoryMeta } from "@/stories/types";
 
 export const STARTER_GEMS = 60;
-const COOKIE = "sw_player";
 
 type StoryRow = typeof stories.$inferSelect;
 type NodeRow = typeof storyNodes.$inferSelect;
@@ -33,35 +31,13 @@ export type Graph = Map<string, GNode>;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function getPlayerId(): Promise<string | null> {
-  const authenticatedPlayerId = await getAuthenticatedPlayerId();
-  if (authenticatedPlayerId) return authenticatedPlayerId;
-  const cookieStore = await cookies();
-  const value = cookieStore.get(COOKIE)?.value;
-  return value && UUID.test(value) ? value : null;
+  return getAuthenticatedPlayerId();
 }
 
-/** Only call from route handlers / server actions (sets a cookie). */
-export async function ensurePlayerId(): Promise<string> {
+/** Returns the signed-in player's id, or null when nobody is signed in. Guest players no longer exist. */
+export async function ensurePlayerId(): Promise<string | null> {
   await ensureSeeded();
-  const existing = await getPlayerId();
-  if (existing) {
-    const [row] = await db.select({ id: players.id }).from(players).where(eq(players.id, existing));
-    if (row) return existing;
-  }
-  const [created] = await db.insert(players).values(existing ? { id: existing } : {}).returning({ id: players.id });
-  await db.insert(gemTransactions).values({
-    playerId: created.id,
-    amount: STARTER_GEMS,
-    kind: "welcome",
-    description: "Welcome gift",
-  });
-  (await cookies()).set(COOKIE, created.id, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 365 * 2,
-  });
-  return created.id;
+  return getAuthenticatedPlayerId();
 }
 
 export async function getGems(playerId: string | null): Promise<number> {
@@ -151,6 +127,8 @@ export async function startPlaythrough(playerId: string, slug: string): Promise<
   if (!start) return null;
   const state = initialState(story.meta);
   const first = resolveRoutes((k) => graph.get(k), start.nodeKey, state);
+  const firstNode = graph.get(first);
+  if (!firstNode || firstNode.routes?.length) return null;
   const [row] = await db
     .insert(playthroughs)
     .values({ playerId, storyId: story.id, currentNodeKey: first, state })
@@ -309,6 +287,12 @@ export async function makeChoice(playthroughId: string, playerId: string, choice
     if (!node || !choice) return { ok: false, status: 400, error: "That choice isn't available here." };
     if (!checkCond(pt.state, choice.conditions))
       return { ok: false, status: 403, error: choice.lockReason ?? "That choice is locked." };
+
+    const preview = applyEffects(pt.state, choice.effects);
+    const dest = graph.get(resolveRoutes((k) => graph.get(k), choice.targetNodeKey, preview));
+    if (!dest || dest.routes?.length) {
+      return { ok: false, status: 500, error: "Story graph is broken (missing or unresolved node)." };
+    }
 
     let spent = 0;
     if (choice.isPremium && choice.priceGems > 0) {

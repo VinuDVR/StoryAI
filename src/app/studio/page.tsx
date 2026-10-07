@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { validateStory, type StoryReport } from "@/lib/validate";
 import { STORIES } from "@/stories";
 
@@ -12,6 +13,7 @@ function reports(): StoryReport[] {
 }
 
 export default function StudioPage() {
+  if (process.env.NODE_ENV === "production") notFound();
   const list = reports();
   const bad = list.filter((r) => r.errors.length).length;
 

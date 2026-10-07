@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import GemShop from "@/components/GemShop";
 import {
   DAILY_GEMS,
@@ -13,6 +14,7 @@ export const dynamic = "force-dynamic";
 
 export default async function GemsPage() {
   const playerId = await getPlayerId();
+  if (!playerId) redirect("/account?next=%2Fgems");
   const [gems, txs, last] = await Promise.all([getGems(playerId), listTransactions(playerId), lastDailyClaim(playerId)]);
   const canClaim = canClaimDaily(last);
 

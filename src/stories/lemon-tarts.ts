@@ -1,7 +1,7 @@
 import { when } from "./dsl";
 import type { StoryDef } from "./types";
 
-export const lemonTarts: StoryDef = {
+export const lemonTartsLegacy: StoryDef = {
   slug: "love-lies-and-lemon-tarts",
   title: "Love, Lies & Lemon Tarts",
   tagline: "Eight bakers. One trophy. One extremely annoying man who keeps stealing your vanilla.",

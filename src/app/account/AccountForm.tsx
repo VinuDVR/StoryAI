@@ -91,7 +91,7 @@ export default function AccountForm() {
           </span>
         </label>
         {error && <p role="alert" className="text-sm text-rose-300">{error}</p>}
-        <button disabled={pending} className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-wait disabled:opacity-60">
+        <button disabled={pending} className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-sand text-sm font-semibold text-navy transition hover:brightness-110 disabled:cursor-wait disabled:opacity-60">
           {pending ? "Please wait…" : mode === "register" ? "Create account" : "Sign in"}
           {!pending && <ArrowRight className="h-4 w-4" />}
         </button>

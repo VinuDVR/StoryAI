@@ -42,7 +42,7 @@ export default function StartButton({
 
   const styles =
     variant === "primary"
-      ? "bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-900/30 hover:brightness-110"
+      ? "bg-sand text-navy shadow-lg shadow-black/30 hover:brightness-110"
       : "border border-white/15 text-zinc-200 hover:bg-white/5";
 
   return (

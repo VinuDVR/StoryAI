@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { UserRound } from "lucide-react";
+import Logo from "@/components/Logo";
 import { db } from "@/db";
 import { players } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -24,13 +25,13 @@ export default async function Header() {
     gems = 0;
   }
   return (
-    <header className="sticky top-0 z-30 border-b border-white/5 bg-[#0b0a12]/80 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-white/5 bg-[#0e1d2c]/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight text-white">
-          <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-sm">
-            ✦
+        <Link href="/" className="flex items-center gap-3 text-stone">
+          <span className="grid h-8 w-8 place-items-center">
+            <Logo className="h-8 w-8" />
           </span>
-          StoryWeave
+          <span className="font-story text-lg font-medium tracking-[0.3em]">TESSERA</span>
         </Link>
         <nav className="flex items-center gap-1 text-sm">
           <Link href="/" className="rounded-full px-3 py-1.5 text-zinc-300 hover:bg-white/5 hover:text-white">

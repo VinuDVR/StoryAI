@@ -61,7 +61,7 @@ export async function generateCoverImage({
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        ...(isOpenRouter && { "HTTP-Referer": "http://localhost:3000", "X-Title": "StoryWeave" }),
+        ...(isOpenRouter && { "HTTP-Referer": "http://localhost:3000", "X-Title": "Tessera" }),
       },
       body: JSON.stringify(
         isOpenRouter

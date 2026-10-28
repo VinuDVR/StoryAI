@@ -56,7 +56,7 @@ export default function StoryCard({ story, found = 0 }: { story: StoryCardData; 
           image={story.coverImageUrl}
           className="h-full w-full transition duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0a12] via-[#0b0a12]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0e1d2c] via-[#0e1d2c]/40 to-transparent" />
         <div className="absolute left-3 top-3 flex gap-2">
           <span className="rounded-full bg-black/60 px-2.5 py-1 text-xs font-medium text-zinc-200 backdrop-blur">
             {story.ageRating}

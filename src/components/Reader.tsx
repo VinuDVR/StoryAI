@@ -85,7 +85,7 @@ export default function Reader({ initial }: { initial: GameView }) {
 
   async function share() {
     if (!view.ending) return;
-    const text = `I reached Ending ${String(view.ending.number).padStart(2, "0")}: "${view.ending.title}" in ${view.storyTitle} on StoryWeave.`;
+    const text = `I reached Ending ${String(view.ending.number).padStart(2, "0")}: "${view.ending.title}" in ${view.storyTitle} on Tessera.`;
     const url = `${window.location.origin}/story/${view.slug}`;
     try {
       if (navigator.share) await navigator.share({ title: view.storyTitle, text, url });
@@ -325,7 +325,7 @@ export default function Reader({ initial }: { initial: GameView }) {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <button onClick={playAgain} disabled={busy} className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white disabled:opacity-60">
+              <button onClick={playAgain} disabled={busy} className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-navy disabled:opacity-60">
                 Play again
               </button>
               <button onClick={share} className="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-zinc-200 hover:bg-white/5">
@@ -346,7 +346,7 @@ export default function Reader({ initial }: { initial: GameView }) {
       {panel && (
         <div className="fixed inset-0 z-40 flex justify-end">
           <button aria-label="Close" className="absolute inset-0 bg-black/60" onClick={() => setPanel(null)} />
-          <aside className="slide-in relative flex h-full w-full max-w-md flex-col border-l border-white/10 bg-[#100e1a]">
+          <aside className="slide-in relative flex h-full w-full max-w-md flex-col border-l border-white/10 bg-[#132638]">
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <div className="flex gap-1 text-sm">
                 {(["bonds", "journal", "history"] as const).map((p) => (
@@ -396,7 +396,7 @@ export default function Reader({ initial }: { initial: GameView }) {
                     <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500">Your traits</p>
                     <div className="space-y-2">
                       {view.traits.map((t) => (
-                        <Bar key={t.label} label={t.label} pct={Math.min(100, t.value * 10)} color="#a78bfa" />
+                        <Bar key={t.label} label={t.label} pct={Math.min(100, t.value * 10)} color="#c66d4c" />
                       ))}
                     </div>
                   </div>

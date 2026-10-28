@@ -27,18 +27,18 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   return (
     <main>
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_400px_at_20%_-10%,rgba(139,92,246,0.35),transparent),radial-gradient(700px_400px_at_90%_10%,rgba(236,72,153,0.25),transparent)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_400px_at_20%_-10%,rgba(53,102,94,0.45),transparent),radial-gradient(700px_400px_at_90%_10%,rgba(198,109,76,0.22),transparent)]" />
         <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-20 sm:pt-28">
           <p className="fade-up text-xs font-semibold uppercase tracking-[0.35em] text-violet-300">Interactive stories</p>
           <h1 className="font-story fade-up-2 mt-4 max-w-3xl text-5xl font-semibold leading-[1.05] text-white sm:text-7xl">
-            Every choice leaves a mark.
+            Small choices. Bigger pictures.
           </h1>
           <p className="fade-up-3 mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
             Become the protagonist. Earn trust, tell lies, keep secrets. The people in these stories remember what you did, and the ending
             you get is the one you built.
           </p>
           <div className="fade-up-3 mt-8 flex flex-wrap gap-3">
-            <a href="#stories" className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-fuchsia-900/30 hover:brightness-110">
+            <a href="#stories" className="rounded-full bg-sand px-7 py-3 text-sm font-semibold text-navy shadow-lg shadow-black/30 hover:brightness-110">
               Choose a story
             </a>
             <span className="rounded-full border border-white/10 px-5 py-3 text-sm text-zinc-400">

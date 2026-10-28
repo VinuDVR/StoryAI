@@ -1,7 +1,7 @@
 import { when } from "./dsl";
 import type { StoryDef } from "./types";
 
-export const keplerStation: StoryDef = {
+export const keplerStationLegacy: StoryDef = {
   slug: "signal-lost-kepler-station",
   title: "Signal Lost: Kepler Station",
   tagline: "You woke six months early. Nobody else did.",

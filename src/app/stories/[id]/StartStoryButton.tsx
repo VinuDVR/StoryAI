@@ -34,7 +34,7 @@ export default function StartStoryButton({ storyId }: { storyId: number }) {
     <button
       onClick={handleStart}
       disabled={loading}
-      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-60 text-white font-sans font-semibold text-sm transition-colors glow-pulse"
+      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-sand hover:brightness-110 disabled:opacity-60 text-navy font-sans font-semibold text-sm transition-colors glow-pulse"
     >
       {loading ? (
         <Loader2 className="w-4 h-4 animate-spin" />

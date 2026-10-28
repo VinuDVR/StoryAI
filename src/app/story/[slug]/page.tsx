@@ -72,7 +72,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               {active && (
-                <Link href={`/play/${active.id}`} className="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-7 py-3 text-sm font-semibold text-white hover:brightness-110">
+                <Link href={`/play/${active.id}`} className="rounded-full bg-sand px-7 py-3 text-sm font-semibold text-navy hover:brightness-110">
                   Continue · Chapter {active.chapter ?? 1}
                 </Link>
               )}

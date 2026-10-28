@@ -1,8 +1,43 @@
 @import "tailwindcss";
 
+@theme {
+  --color-navy: #172c43;
+  --color-jade: #35665e;
+  --color-terracotta: #c66d4c;
+  --color-stone: #f0e8d9;
+  --color-charcoal: #1a1a1a;
+  --color-sand: #e0bf8f;
+
+  --color-violet-200: #f2cbb9;
+  --color-violet-300: #e5a58a;
+  --color-violet-400: #d68866;
+  --color-violet-500: #c66d4c;
+  --color-violet-600: #a8573a;
+
+  --color-purple-200: #f2cbb9;
+  --color-purple-300: #e5a58a;
+  --color-purple-400: #d68866;
+  --color-purple-500: #c66d4c;
+  --color-purple-600: #a8573a;
+  --color-purple-900: #4a2418;
+
+  --color-fuchsia-100: #f6ecd8;
+  --color-fuchsia-200: #eedcb9;
+  --color-fuchsia-300: #e0bf8f;
+  --color-fuchsia-400: #d4ac74;
+  --color-fuchsia-500: #c4965a;
+  --color-fuchsia-900: #4b3a22;
+
+  --color-amber-100: #f6ecd8;
+  --color-amber-200: #eedcb9;
+  --color-amber-300: #e0bf8f;
+  --color-amber-400: #d4ac74;
+  --color-amber-500: #c4965a;
+}
+
 :root {
-  --bg: #0b0a12;
-  --ink: #e7e5ee;
+  --bg: #0e1d2c;
+  --ink: #f0e8d9;
 }
 
 html {
@@ -13,11 +48,11 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 .font-story {
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
 }
 
 @keyframes fade-up {
@@ -57,5 +92,5 @@ body {
 }
 
 ::selection {
-  background: #7c3aed80;
+  background: #c66d4c66;
 }

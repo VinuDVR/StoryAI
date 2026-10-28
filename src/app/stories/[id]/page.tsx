@@ -39,7 +39,7 @@ export default async function StoryDetailPage({
   }>;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
+    <div className="min-h-screen bg-[#0e1d2c]">
       {/* Back */}
       <div className="max-w-4xl mx-auto px-6 pt-6">
         <Link
@@ -63,7 +63,7 @@ export default async function StoryDetailPage({
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-purple-900/50 to-slate-900" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1d2c] via-[#0e1d2c]/40 to-transparent" />
 
           <div className="absolute bottom-6 left-6 right-6">
             <div className="flex flex-wrap gap-2 mb-3">
@@ -101,7 +101,7 @@ export default async function StoryDetailPage({
                   {characters.map((char) => (
                     <div
                       key={char.id}
-                      className="bg-[#12121a] border border-white/5 rounded-xl p-4"
+                      className="bg-[#142a3d] border border-white/5 rounded-xl p-4"
                     >
                       <div className="flex items-center justify-between mb-1">
                         <span className="font-semibold text-white">{char.name}</span>
@@ -140,7 +140,7 @@ export default async function StoryDetailPage({
           {/* Sidebar */}
           <div className="space-y-4">
             {/* Stats */}
-            <div className="bg-[#12121a] border border-white/5 rounded-xl p-4 space-y-3 font-sans">
+            <div className="bg-[#142a3d] border border-white/5 rounded-xl p-4 space-y-3 font-sans">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-slate-400 flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5" /> Chapters
